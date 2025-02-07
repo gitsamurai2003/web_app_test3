@@ -7,7 +7,7 @@ import { Adapter } from "next-auth/adapters";
 import { redirect } from "next/navigation";
 import { env } from "@/lib/env.mjs";
 import CredentialsProvider from "next-auth/providers/credentials";
-import bcrypt from "bcrypt";
+import bcryptjs from "bcryptjs";
 
 declare module "next-auth" {
   interface Session {
@@ -60,7 +60,7 @@ export const authOptions: NextAuthOptions = {
           where: { email: credentials.email },
         });
 
-        if (user && bcrypt.compareSync(credentials.password, user.password)) {
+        if (user && bcryptjs.compareSync(credentials.password, user.password)) {
           return user;
         } else {
           return null;
