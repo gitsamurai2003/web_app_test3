@@ -59,22 +59,10 @@ Validaciones como verificar que la cédula sea un número válido y que el salar
 
 Mensajes de error claros en caso de que las validaciones no se cumplan.
 
-Tecnología: Uso de librerías de validación como zod en el backend y validaciones en el frontend.
+Descripcion del desarrollo:
+Las validaciones estan presentes en login, register y data, se implementaron el el frontend como un estado de setErrorMessage de acuerdo al regex que pueda llegar a incumplirse, dando al usuario un mensaje claro de que debe corregir y manteniendo la DB con informacion mas confiable y ordenada.
 
-4. Presentación de Datos de la Base de Datos
-Descripción: Los usuarios autenticados pueden ver y buscar entradas de información personal.
-
-Características:
-
-Implementación del data table de shadcn para mostrar las entradas.
-
-Página donde se muestran las entradas ordenadas por criterios relevantes.
-
-Barra de búsqueda para buscar entradas utilizando diferentes criterios como nombre, cédula o dirección.
-
-Tecnología: Uso de Shadcn para la presentación de datos.
-
-5. Despliegue en la Nube
+4. Despliegue en la Nube
 Descripción: Asegurarse de que la aplicación esté desplegada en la nube.
 
 Objetivo:
@@ -82,7 +70,7 @@ Configuración de variables de entorno y despliegue sin errores.
 
 Despliegue de la aplicación en Vercel.
 
-Descripcion deL desarrollo: 
+Descripcion del desarrollo: 
 Algunos retos del muy bien explicado proceso de deployment en Vercel fueron: La incompatibilidad de vercel con bcrypt, por lo cual cambie bcrypt por bcryptjs para continuar con el build sin problemas, y la ausencia de conexion valida de BD, primero subi una .env variable de DATABASE_URL la cual era localhost y por tanto fuera del contexto nuevo, aprendi a usar supabase (pude usar railway tambien) para mi db en linea, cambie el DATABASE_URL e hice las migraciones y se logro el build funcional.
 #####################################################################################################################################
 First, run the development server:
