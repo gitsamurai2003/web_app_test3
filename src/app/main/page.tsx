@@ -4,7 +4,6 @@ import { useState, useEffect } from "react";
 import { useSession, signOut } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import styles from "./Main.module.css"; // Asegúrate de que la ruta sea correcta
 
 interface User {
   id: string;
@@ -48,7 +47,7 @@ const Main: React.FC = () => {
   };
 
   useEffect(() => {
-    const navbar = document.querySelector(`.${styles.navbar}`);
+    const navbar = document.querySelector('.navbar');
     if (navbar) {
       navbar.addEventListener("mousemove", handleMouseMove);
       navbar.addEventListener("mouseleave", handleMouseLeave);
@@ -70,22 +69,25 @@ const Main: React.FC = () => {
   if (!session) return <p>You are not logged in.</p>;
 
   return (
-    <div className={styles.container}>
-      <nav className={styles.navbar}>
-        <div className={styles.heatmap} style={heatmapStyle}></div>
-        <div className={styles.navItems}>
-          <Link href="/table">Shadcn Table</Link>
-          <Link href="/data">Data</Link>
+    <div className="min-h-screen flex flex-col">
+        <nav className="bg-gray-900 p-4 flex justify-between items-center relative navbar">
+        <div className="absolute top-0 left-0 w-full h-full" style={heatmapStyle}></div>
+        <div className="flex-1">
+          <span className="text-white text-2xl"></span>
+        </div>
+        <div className="flex space-x-4 relative z-10">
+          <Link href="/table" className="text-white hover:text-gray-400">Shadcn Table</Link>
+          <Link href="/data" className="text-white hover:text-gray-400">Data</Link>
           <div
             onMouseEnter={() => setShowSignOut(true)}
             onMouseLeave={() => setShowSignOut(false)}
-            className={styles.profileLink}
+            className="relative"
           >
-            <Link href="">Profile</Link>
+            <Link href="" className="text-white hover:text-gray-400">Profile</Link>
             {showSignOut && (
               <button
                 onClick={() => signOut({ callbackUrl: "/" })}
-                className={styles.signOutButton}
+                className="absolute top-full mt-1 right-0 bg-gray-700 text-white py-1 px-3 rounded hover:bg-gray-500"
               >
                 Sign Out
               </button>
@@ -93,8 +95,10 @@ const Main: React.FC = () => {
           </div>
         </div>
       </nav>
-      <main className={styles.mainContent}>
-        <span className={styles.rainbow}>RAINBOW</span> <span className={styles.data}>DATA</span>
+
+      <main className="flex-grow flex flex-col items-center justify-center text-center p-4 bg-gray-800 text-white">
+        <span className="text-6xl font-bold">RAINBOW</span> 
+        <span className="text-6xl font-light">DATA</span>
         {session && session.user ? (
           <>
             <p>Welcome, {session.user.email}</p>
