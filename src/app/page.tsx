@@ -4,7 +4,6 @@ import { useState } from "react";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import styles from "./Login.module.css"; // Importar el archivo de estilos
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -28,39 +27,39 @@ export default function Login() {
   };
 
   return (
-    <div className={styles.container}>
-      <form onSubmit={handleSubmit} className={styles.form}>
-        <h2 className={styles.title}>Login</h2>
-        <div className={styles.inputGroup}>
-          <label htmlFor="email">Email</label>
+    <div className="flex items-center justify-center min-h-screen bg-gray-100">
+      <form onSubmit={handleSubmit} className="bg-white p-6 rounded-lg shadow-lg">
+        <h2 className="text-2xl font-bold mb-6">Login</h2>
+        <div className="mb-4">
+          <label htmlFor="email" className="block text-sm font-medium text-gray-700">Email</label>
           <input
             type="email"
             id="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className={styles.input}
+            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
             placeholder="Email"
           />
         </div>
-        <div className={styles.inputGroup}>
-          <label htmlFor="password">Password</label>
+        <div className="mb-6">
+          <label htmlFor="password" className="block text-sm font-medium text-gray-700">Password</label>
           <input
             type="password"
             id="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className={styles.input}
+            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
             placeholder="Password"
           />
         </div>
-        <div className={styles.buttonContainer}>
-          <button type="submit" className={styles.button}>
+        <div className="flex items-center justify-between">
+          <button type="submit" className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
             &rarr;
           </button>
         </div>
-        <div className={styles.register}>
-          <span>Don't have an account?</span>
-          <Link href="/register" className={styles.registerLink}>Create one</Link>
+        <div className="mt-4 text-center">
+          <span className="text-sm text-gray-600">Don't have an account?</span>
+          <Link href="/register" className="ml-1 text-sm text-blue-500 hover:underline">Create one</Link>
         </div>
       </form>
     </div>
