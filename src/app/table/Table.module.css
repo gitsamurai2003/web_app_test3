@@ -1,0 +1,109 @@
+.navbar {
+    display: flex;
+    justify-content: flex-end;
+    background-color: white;
+    padding: 2rem 2rem; /* 32px */
+    box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.1); /* 0 4px 8px */
+    position: relative;
+    font-family: monospace;
+    overflow: visible; /* Cambiado de 'hidden' a 'visible' */
+    z-index: 1; /* Asegúrate de que la navbar tenga un z-index menor que el botón */
+  }
+  
+  .navItems {
+    display: flex;
+    gap: 1.5rem; /* 24px */
+  }
+  
+  .navItem {
+    color: #333;
+    text-decoration: none;
+    font-size: 1rem; /* 16px */
+    font-weight: 500;
+    font-family: monospace;
+    padding: 0.5rem 1rem; /* 8px 16px */
+    border-radius: 0.25rem; /* 4px */
+    transition: background-color 0.3s, color 0.3s;
+    position: relative;
+    z-index: 1;
+  }
+  
+  .navItem:hover {
+    background-color: #f0f0f0;
+    color: #000;
+  }
+  
+  .mainContent {
+    flex: 1;
+    display: absolute;
+    top: auto;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem; /* 16px */
+    font-size: 1.5rem; /* 24px */
+  }
+  
+  .heatmap {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 3;
+    pointer-events: none;
+    background: none;
+    transition: background 0.3s;
+  }
+  
+  .rainbow {
+    background: linear-gradient(90deg, red, orange, yellow, green, blue, indigo, violet);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  
+  .data {
+    color: black;
+  }
+  
+  .profileLink {
+    position: relative;
+  }
+  
+  .signOutButton {
+    position: absolute;
+    left: -2rem; /* -70px */
+    top: 100%;
+    z-index: 9999; /* Ajustado para que el botón tenga el z-index más alto */
+    background-color: white;
+    color: black;
+    border: 0.0625rem solid #ddd; /* 1px */
+    padding: 0.125rem 1.25rem; /* 2px 20px */
+    cursor: pointer;
+    width: 6.3rem; /* 100px */
+  }
+  
+  .signOutButton:hover {
+    background-color: lightgray;
+  }
+  
+  .container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+  }
+  
+  .titleContainer {
+    display: flex;
+    justify-content: center; /* Horizontally centers the title */
+    align-items: center; /* Vertically centers the title (optional, based on your needs) */
+    width: 100%; /* Ensure the container takes up the full width */
+  }
+  
+  .title {
+    font-size: 2rem;
+    font-weight: 500;
+    font-family: monospace;
+    margin-top: 1rem;
+  }
+  

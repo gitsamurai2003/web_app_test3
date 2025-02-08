@@ -1,0 +1,107 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.navbar {
+  display: flex;
+  justify-content: flex-end;
+  background-color: white;
+  padding: 2rem 2rem;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  position: relative;
+  overflow: hidden;
+}
+
+.navItems {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.navItem {
+  color: #333;
+  text-decoration: none;
+  font-size: 1.4rem;
+  font-weight: 500;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  transition: background-color 0.3s, color 0.3s;
+  position: relative;
+  z-index: 1;
+}
+
+.navItem:hover {
+  background-color: #f0f0f0;
+  color: #000;
+}
+
+.mainContent {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  font-size: 2rem;
+}
+
+.heatmap {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 3;
+  pointer-events: none;
+  background: none;
+  transition: background 0.3s;
+}
+
+.rainbow {
+    background: linear-gradient(90deg, red, orange, yellow, green, blue, indigo, violet);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  
+  .data {
+    color: black;
+  }
+
+  .button {
+    padding: 0.75rem 2rem; /* Ajustar el padding para un mejor tamaño del botón */
+    background-color: #00563b;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-family: 'Roboto', sans-serif;
+    margin-top: 1rem; /* Añadir margen superior para bajar el botón */
+  }
+  
+  .button:hover {
+    background-color: #123524;
+  }
+
+  .profileLink {
+    position: relative;
+  }
+  
+  .signOutButton {
+    position: absolute;
+    left: -70%;
+    top: 100%;
+    z-index: 2;
+    background-color: white;
+    color: black;
+    border: 1px solid #ddd;
+    padding: 2px 20px; /* Aumenta el padding horizontal */
+    cursor: pointer;
+    width: 100px; /* Establece un ancho fijo, opcional */
+  }
+
+  .signOutButton:hover {
+    background-color: lightgray;
+
+  }
