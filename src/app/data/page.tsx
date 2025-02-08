@@ -115,7 +115,10 @@ const DataPage: React.FC = () => {
   const handleCriteriaChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setSearchCriteria(e.target.value);
   };
-  
+
+  useEffect(() => {
+    setFilteredEntries(entries);
+  }, [entries]);
   
   useEffect(() => {
     if (status === "unauthenticated") {
@@ -136,10 +139,6 @@ const DataPage: React.FC = () => {
     }
   }, [session]);
 
-  useEffect(() => {
-    setFilteredEntries(entries);
-  }, [entries]);
-  
   function sanitizeData(entries: Entry[]): Omit<Entry, 'id' | 'userEmail'>[] {
     return entries.map(({ id, userEmail, ...rest }) => rest);
   }
