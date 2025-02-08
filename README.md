@@ -1,23 +1,78 @@
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-## Getting Started
+Para ejecutar este proyecto localmente, sigue estos pasos:
 
-El orden de comandos para ejecutar localmente este proyecto es:
+Instala las dependencias:
+bash
 npm i
+
+Inicia el servidor de desarrollo:
+bash
 npm run dev
 
-por supuesto, si no se realizo el setup con kirimase, debe hacerse las migraciones de prisma con npx prisma migrate --name init
+Migraciones de Prisma (si no has realizado el setup con KiraMase):
+bash
+npx prisma migrate --name init
 npx prisma generate
 
-En el .env se debe contener las siguientes variables: 
-DATABASE_URL="" #Utilice postgresql con prisma 
+Variables de Entorno
+Asegúrate de que tu archivo .env contenga las siguientes variables:
+env
+DATABASE_URL=""         # Utilice PostgreSQL con Prisma
 GITHUB_CLIENT_SECRET=""
 NEXTAUTH_URL="http://localhost:3000"
 GITHUB_CLIENT_ID=""
-AUTH_SECRET="" # Added by `npx auth`. Read more: https://cli.authjs.dev 
+AUTH_SECRET=""          # Added by `npx auth`. Read more: https://cli.authjs.dev
+#####################################################################################################################################
+Breve documentacion de como se implementaron funciones clave.-
 
-##################################################################################
+1. Autenticación y Manejo de Sesión
+Descripción: Implementación de autenticación de usuarios utilizando Auth.js(NextAuth).
 
+Características:
+
+Los usuarios pueden registrarse e iniciar sesión con su correo electrónico.
+
+Posibilidad de cerrar sesión de manera segura.
+
+Descripcion deL desarrollo: 
+Implementando NextAuth con Kirimase CLI queda a disposicion funciones como useSession, signIn, signOut, en la pagina principal '/' (login) se utiliza signIn en el proceso para autenticar al usuario comparando su email y clave con lo contenido en la tabla Users de la DB, con useSession manejamos la sesion, su validez de acuerdo a su vida (maxAge) la cual es 24 horas, signOut presente en el hover de Profile cierra la sesion del usuario con seguridad. El registro de nuevo usuario verifica el usuario no exista antes en la DB y en el front end se verificael email y la password cumplan con lo requerido, si es asi el registro es exitoso y se guarda en la DB e nuevo usuario.
+
+2. Subida de Datos a una Base de Datos
+Descripción: Los usuarios pueden agregar información personal a través de la aplicación.
+
+Características:
+
+Cada entrada incluye campos como nombre, cédula, teléfono, dirección y salario.
+
+Creación de reportes que listan los usuarios con mejor salario y calculan la media y promedios.
+
+Descripcion deL desarrollo: 
+Para poder guardar informacion personal de un User, es decir, entries, se modifico el schema.prisma para albergar una nueva tabla Entry que esta relacionada con el User a traves de UserEmail. La pagina Data y Table manejan el GET y POST de estos datos relacionados al usuario actualmente logeado, en Table solo se hace GET y se muestran los datos, y en Data se implementaron las funciones de POST tambien, la barra de busqueda con criterio y el ordenamiento con criterio, se genera un reporte en Excel usando el import XLSX conteniendo 3 paginas, informacion, mejores salarios y calculos de mediana y promedio.
+
+3. Manejo de Formularios con Validaciones
+Descripción: Implementación de validaciones en los formularios para garantizar la exactitud de los datos ingresados.
+
+Características:
+
+Validaciones como verificar que la cédula sea un número válido y que el salario sea un número positivo.
+
+Mensajes de error claros en caso de que las validaciones no se cumplan.
+
+Descripcion del desarrollo:
+Las validaciones estan presentes en login, register y data, se implementaron el el frontend como un estado de setErrorMessage de acuerdo al regex que pueda llegar a incumplirse, dando al usuario un mensaje claro de que debe corregir y manteniendo la DB con informacion mas confiable y ordenada.
+
+4. Despliegue en la Nube
+Descripción: Asegurarse de que la aplicación esté desplegada en la nube.
+
+Objetivo:
+Configuración de variables de entorno y despliegue sin errores.
+
+Despliegue de la aplicación en Vercel.
+
+Descripcion del desarrollo: 
+Algunos retos del muy bien explicado proceso de deployment en Vercel fueron: La incompatibilidad de vercel con bcrypt, por lo cual cambie bcrypt por bcryptjs para continuar con el build sin problemas, y la ausencia de conexion valida de BD, primero subi una .env variable de DATABASE_URL la cual era localhost y por tanto fuera del contexto nuevo, aprendi a usar supabase (pude usar railway tambien) para mi db en linea, cambie el DATABASE_URL e hice las migraciones y se logro el build funcional.
+#####################################################################################################################################
 First, run the development server:
 
 ```bash
