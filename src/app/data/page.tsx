@@ -301,6 +301,10 @@ const DataPage: React.FC = () => {
     }
   };
 
+  useEffect(() => {
+    setFilteredEntries(entries);
+  }, [entries]);
+  
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setNewEntry({
@@ -332,130 +336,182 @@ const DataPage: React.FC = () => {
   const mediana = calcularMediana();
 
   return (
-    <div className={styles.container}>
-      <nav className={styles.navbar}>
-        <div className={styles.heatmap} style={heatmapStyle}></div>
-        <select
-          value={searchCriteria}
-          onChange={handleCriteriaChange}
-          className={styles.searchCriteria}
-        >
-          <option value="name">Nombre</option>
-          <option value="cedula">Cédula</option>
-          <option value="telefono">Teléfono</option>
-          <option value="direccion">Dirección</option>
-          <option value="salario">Salario</option>
-        </select>
-        <input
-          type="text"
-          placeholder="Search..."
-          value={searchQuery}
-          onChange={handleSearch}
-          className={styles.searchInput}
-        />
-        <select
-          value={sortOrder}
-          onChange={handleSort}
-          className={styles.sortOrder}
-        >
-          <option value="none">Ordenar</option>
-          <option value="nombre_asc">Nombre (A-Z)</option>
-          <option value="nombre_desc">Nombre (Z-A)</option>
-          <option value="salario_mayor">Salario (Mayor a Menor)</option>
-          <option value="salario_menor">Salario (Menor a Mayor)</option>
-          <option value="cedula_mayor">Cédula (Mayor a Menor)</option>
-          <option value="cedula_menor">Cédula (Menor a Mayor)</option>
-        </select>
-        <div className={styles.navItems}>
-        <Link href="/table">Shadcn Table</Link>
-          <Link href="/data">Data</Link>
-          <div onMouseEnter={() => setShowSignOut(true)} onMouseLeave={() => setShowSignOut(false)} className={styles.profileLink}>
-            <Link href="">Profile</Link>
-            {showSignOut && (
-              <button onClick={() => signOut({ callbackUrl: "/" })} className={styles.signOutButton}>
-                Sign Out
+    
+      <div className="min-h-screen flex flex-col">
+        <nav className="bg-gray-900 p-4 relative navbar">
+          <div className="absolute top-0 left-0 w-full h-full" style={heatmapStyle}></div>
+          <div className="flex justify-end space-x-4 relative z-10">
+            <select
+              value={searchCriteria}
+              onChange={handleCriteriaChange}
+              className="bg-gray-700 text-white p-2 rounded"
+            >
+              <option value="name">Nombre</option>
+              <option value="cedula">Cédula</option>
+              <option value="telefono">Teléfono</option>
+              <option value="direccion">Dirección</option>
+              <option value="salario">Salario</option>
+            </select>
+            <input
+              type="text"
+              placeholder="Search..."
+              value={searchQuery}
+              onChange={handleSearch}
+              className="bg-gray-700 text-white p-2 rounded"
+            />
+            <select
+              value={sortOrder}
+              onChange={handleSort}
+              className="bg-gray-700 text-white p-2 rounded"
+            >
+              <option value="none">Ordenar</option>
+              <option value="nombre_asc">Nombre (A-Z)</option>
+              <option value="nombre_desc">Nombre (Z-A)</option>
+              <option value="salario_mayor">Salario (Mayor a Menor)</option>
+              <option value="salario_menor">Salario (Menor a Mayor)</option>
+              <option value="cedula_mayor">Cédula (Mayor a Menor)</option>
+              <option value="cedula_menor">Cédula (Menor a Mayor)</option>
+            </select>
+            <Link href="/table" className="text-white hover:text-gray-400">Shadcn Table</Link>
+            <Link href="/data" className="text-white hover:text-gray-400">Data</Link>
+            <div
+              onMouseEnter={() => setShowSignOut(true)}
+              onMouseLeave={() => setShowSignOut(false)}
+              className="relative"
+            >
+              <Link href="" className="text-white hover:text-gray-400">Profile</Link>
+              {showSignOut && (
+                <button
+                  onClick={() => signOut({ callbackUrl: "/" })}
+                  className="absolute top-full mt-1 right-0 bg-gray-700 text-white py-1 px-3 rounded hover:bg-gray-500"
+                >
+                  Sign Out
+                </button>
+              )}
+            </div>
+          </div>
+        </nav>
+        <main className="flex-grow flex flex-col items-center justify-center p-4 bg-gray-800 text-white">
+        <div className="flex space-x-4 mt-4">
+            <button className="bg-gray-700 p-2 rounded" onClick={handleDownload}>
+              <img src="/icons8-ms-excel-50.png" alt="Excel Icon" />
+            </button>
+            <button
+              onClick={() => setIsFormVisible(!isFormVisible)}
+              className="bg-blue-700 text-white p-2 rounded"
+            >
+              {isFormVisible ? '-' : '+'}
+            </button>
+          </div>
+
+          {isFormVisible && (
+            <div className="flex flex-col space-y-2 mt-4 bg-gray-700 p-4 rounded">
+              <input
+                type="text"
+                name="name"
+                value={newEntry.name}
+                onChange={handleInputChange}
+                placeholder="Nombre"
+                className="bg-gray-600 text-white p-2 rounded"
+              />
+              <input
+                type="text"
+                name="cedula"
+                value={newEntry.cedula}
+                onChange={handleInputChange}
+                placeholder="Cédula"
+                className="bg-gray-600 text-white p-2 rounded"
+              />
+              <input
+                type="text"
+                name="telefono"
+                value={newEntry.telefono}
+                onChange={handleInputChange}
+                placeholder="Teléfono"
+                className="bg-gray-600 text-white p-2 rounded"
+              />
+              <input
+                type="text"
+                name="direccion"
+                value={newEntry.direccion}
+                onChange={handleInputChange}
+                placeholder="Dirección"
+                className="bg-gray-600 text-white p-2 rounded"
+              />
+              <input
+                type="number"
+                name="salario"
+                value={newEntry.salario}
+                onChange={handleInputChange}
+                placeholder="Salario"
+                className="bg-gray-600 text-white p-2 rounded"
+              />
+              <button onClick={handleAddEntry} className="bg-green-700 text-white p-2 rounded">
+                Agregar
               </button>
-            )}
-          </div>
-        </div>
-      </nav>
-      <main className={styles.mainContent}>
-      <button className={styles.button1} onClick={handleDownload}>
-        <img src="/icons8-ms-excel-50.png" alt="Excel Icon" />
-      </button>
-        <button onClick={() => setIsFormVisible(!isFormVisible)} className={styles.addButton}>
-          {isFormVisible ? '-' : '+'}
-        </button>
-        {isFormVisible && (
-          <div className={styles.newEntryForm}>
-            <input type="text" name="name" value={newEntry.name} onChange={handleInputChange} placeholder="Nombre" />
-            <input type="text" name="cedula" value={newEntry.cedula} onChange={handleInputChange} placeholder="Cédula" />
-            <input type="text" name="telefono" value={newEntry.telefono} onChange={handleInputChange} placeholder="Teléfono" />
-            <input type="text" name="direccion" value={newEntry.direccion} onChange={handleInputChange} placeholder="Dirección" />
-            <input type="number" name="salario" value={newEntry.salario} onChange={handleInputChange} placeholder="Salario" />
-            <button onClick={handleAddEntry} className={styles.addButton1}>Agregar</button>
-            {errorMessage && <div className={styles.error}>{errorMessage}</div>}
-          </div>
-        )}
-        <h2 className={styles.title}>Informacion de empleados</h2>
-        <table className={styles.dataTable}>
-          <thead>
-            <tr>
-              <th>Nombre</th>
-              <th>Cédula</th>
-              <th>Teléfono</th>
-              <th>Dirección</th>
-              <th>Salario</th>
-            </tr>
-          </thead>
-          <tbody>
-            {filteredEntries.map((entry) => (
-              <tr key={entry.id}>
-                <td>{entry.name}</td>
-                <td>{entry.cedula}</td>
-                <td>{entry.telefono}</td>
-                <td>{entry.direccion}</td>
-                <td>{entry.salario}$</td>
+              {errorMessage && <div className="text-red-500">{errorMessage}</div>}
+            </div>
+          )}
+          <h2 className="text-2xl font-bold mt-8">Informacion de empleados</h2>
+          <table className="w-full mt-4 bg-gray-700 rounded">
+            <thead>
+              <tr className="bg-gray-600">
+                <th className="p-2">Nombre</th>
+                <th className="p-2">Cédula</th>
+                <th className="p-2">Teléfono</th>
+                <th className="p-2">Dirección</th>
+                <th className="p-2">Salario</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
-
-        <h2 className={styles.title}>Mejores Salarios</h2>
-        <table className={styles.dataTable}>
-          <thead>
-            <tr>
-              <th>Nombre</th>
-              <th>Cédula</th>
-              <th>Teléfono</th>
-              <th>Dirección</th>
-              <th>Salario</th>
-            </tr>
-          </thead>
-          <tbody>
-            {sortedEntries.map((entry) => (
-              <tr key={entry.id}>
-                <td>{entry.name}</td>
-                <td>{entry.cedula}</td>
-                <td>{entry.telefono}</td>
-                <td>{entry.direccion}</td>
-                <td>{entry.salario}$</td>
+            </thead>
+            <tbody>
+              {filteredEntries.map((entry) => (
+                <tr key={entry.id}>
+                  <td className="p-2">{entry.name}</td>
+                  <td className="p-2">{entry.cedula}</td>
+                  <td className="p-2">{entry.telefono}</td>
+                  <td className="p-2">{entry.direccion}</td>
+                  <td className="p-2">{entry.salario}$</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+    
+          <h2 className="text-2xl font-bold mt-8">Mejores Salarios</h2>
+          <table className="w-full mt-4 bg-gray-700 rounded">
+            <thead>
+              <tr className="bg-gray-600">
+                <th className="p-2">Nombre</th>
+                <th className="p-2">Cédula</th>
+                <th className="p-2">Teléfono</th>
+                <th className="p-2">Dirección</th>
+                <th className="p-2">Salario</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
-
-        <div className={styles.statsSection}>
-          <div className={styles.statBox}>
-            <h3 className={styles.title}>Mediana de Salarios:</h3><p className={styles.dataTable}>&#8594; {mediana.toFixed(2)}$</p>
+            </thead>
+            <tbody>
+              {sortedEntries.map((entry) => (
+                <tr key={entry.id}>
+                  <td className="p-2">{entry.name}</td>
+                  <td className="p-2">{entry.cedula}</td>
+                  <td className="p-2">{entry.telefono}</td>
+                  <td className="p-2">{entry.direccion}</td>
+                  <td className="p-2">{entry.salario}$</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+    
+          <div className="flex flex-wrap justify-around w-full mt-8">
+            <div className="bg-gray-700 p-4 rounded mb-4">
+              <h3 className="text-lg font-bold">Mediana de Salarios:</h3>
+              <p>&#8594; {mediana.toFixed(2)}$</p>
+            </div>
+            <div className="bg-gray-700 p-4 rounded mb-4">
+              <h3 className="text-lg font-bold">Promedio de Salarios:</h3>
+              <p>&#8594; {promedio.toFixed(2)}$</p>
+            </div>
           </div>
-          <div className={styles.statBox}>
-            <h3 className={styles.title}>Promedio de Salarios:</h3><p className={styles.dataTable}>&#8594; {promedio.toFixed(2)}$</p>
-          </div>
-        </div>
-      </main>
-    </div>
-  );
+        </main>
+      </div>
+    );
 };
-
 export default DataPage;
