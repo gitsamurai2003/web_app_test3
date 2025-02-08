@@ -136,6 +136,10 @@ const DataPage: React.FC = () => {
     }
   }, [session]);
 
+  useEffect(() => {
+    setFilteredEntries(entries);
+  }, [entries]);
+  
   function sanitizeData(entries: Entry[]): Omit<Entry, 'id' | 'userEmail'>[] {
     return entries.map(({ id, userEmail, ...rest }) => rest);
   }
@@ -301,10 +305,6 @@ const DataPage: React.FC = () => {
     }
   };
 
-  useEffect(() => {
-    setFilteredEntries(entries);
-  }, [entries]);
-  
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setNewEntry({
