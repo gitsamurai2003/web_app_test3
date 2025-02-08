@@ -6,7 +6,6 @@ import { useState, useEffect } from "react";
 import { useSession, signOut } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import styles from "./Table.module.css"; // Asegúrate de que la ruta sea correcta
 
 interface Entry {
   id: number;
@@ -59,7 +58,7 @@ export default function DemoPage() {
   };
 
   useEffect(() => {
-    const navbar = document.querySelector(`.${styles.navbar}`);
+    const navbar = document.querySelector('.navbar');
     if (navbar) {
       navbar.addEventListener("mousemove", handleMouseMove);
       navbar.addEventListener("mouseleave", handleMouseLeave);
@@ -85,25 +84,32 @@ export default function DemoPage() {
   }, []);
 
   return (
-    <div className={styles.container}>
-      <nav className={styles.navbar}>
-        <div className={styles.heatmap} style={heatmapStyle}></div>
-        <div className={styles.navItems}>
-          <Link href="/table">Shadcn Table</Link>
-          <Link href="/data">Data</Link>
-          <div onMouseEnter={() => setShowSignOut(true)} onMouseLeave={() => setShowSignOut(false)} className={styles.profileLink}>
-            <Link href="">Profile</Link>
+    <div className="min-h-screen flex flex-col bg-gray-100">
+      <nav className="bg-gray-900 p-4 relative navbar">
+        <div className="absolute top-0 left-0 w-full h-full" style={heatmapStyle}></div>
+        <div className="flex justify-end space-x-4 relative z-10">
+          <Link href="/table" className="text-white hover:text-gray-400">Shadcn Table</Link>
+          <Link href="/data" className="text-white hover:text-gray-400">Data</Link>
+          <div
+            onMouseEnter={() => setShowSignOut(true)}
+            onMouseLeave={() => setShowSignOut(false)}
+            className="relative"
+          >
+            <Link href="" className="text-white hover:text-gray-400">Profile</Link>
             {showSignOut && (
-              <button onClick={() => signOut({ callbackUrl: "/" })} className={styles.signOutButton}>
+              <button
+                onClick={() => signOut({ callbackUrl: "/" })}
+                className="absolute top-full mt-1 right-0 bg-gray-700 text-white py-1 px-3 rounded hover:bg-gray-500"
+              >
                 Sign Out
               </button>
             )}
           </div>
         </div>
       </nav>
-      <main className={styles.mainContent}>
-        <div className={styles.titleContainer}>
-          <h1 className={styles.title}>Shadcn Table</h1>
+      <main className="flex-grow flex flex-col items-center justify-center text-center p-4 bg-gray-800 text-white">
+        <div className="mb-10">
+          <h1 className="text-4xl font-bold">Shadcn Table</h1>
         </div>
         <div className="container mx-auto py-10">
           <DataTable
