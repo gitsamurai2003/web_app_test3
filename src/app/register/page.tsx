@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import styles from "./Register.module.css"; 
 
 export default function Register() {
   const [email, setEmail] = useState("");
@@ -62,41 +61,48 @@ export default function Register() {
   };
 
   return (
-    <div className={styles.container}>
-      <form onSubmit={handleSubmit} className={styles.form}>
-        <h2 className={styles.title}>Register</h2>
-        <div className={styles.inputGroup}>
-          <label>Email</label>
+    <div className="flex items-center justify-center min-h-screen bg-gray-900">
+      <form onSubmit={handleSubmit} className="bg-gray-800 p-6 rounded-lg shadow-lg">
+        <h2 className="text-2xl font-bold mb-6 text-white">Register</h2>
+        <div className="mb-4">
+          <label className="block text-sm font-medium text-gray-300">Email</label>
           <input
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+            className="mt-1 block w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm text-white placeholder-gray-400"
             required
           />
         </div>
-        <div className={styles.inputGroup}>
-          <label>Password</label>
+        <div className="mb-4">
+          <label className="block text-sm font-medium text-gray-300">Password</label>
           <input
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            className="mt-1 block w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm text-white placeholder-gray-400"
             required
           />
         </div>
-        <div className={styles.inputGroup}>
-          <label>Confirm Password</label>
+        <div className="mb-6">
+          <label className="block text-sm font-medium text-gray-300">Confirm Password</label>
           <input
             type="password"
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
+            className="mt-1 block w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm text-white placeholder-gray-400"
             required
           />
         </div>
-        {errorMessage && <div className={styles.error}>{errorMessage}</div>}
-        <button type="submit" className={styles.button}>&rarr;</button>
-        <div className={styles.login}>
-          <span>Already have an account?</span>
-          <Link href="/" className={styles.loginLink}>
+        {errorMessage && (
+          <div className="mb-4 text-sm text-red-500">{errorMessage}</div>
+        )}
+        <button type="submit" className="w-full px-4 py-2 bg-blue-700 text-white rounded-md hover:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+          &rarr;
+        </button>
+        <div className="mt-4 text-center">
+          <span className="text-sm text-gray-300">Already have an account?</span>
+          <Link href="/" className="ml-1 text-sm text-blue-400 hover:underline">
             Login
           </Link>
         </div>
